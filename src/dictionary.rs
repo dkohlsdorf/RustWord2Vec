@@ -52,7 +52,6 @@ impl Dictionary {
 
     pub fn load(filename: String) -> Dictionary {
         let mut file = File::open(filename).unwrap();
-        println!("hi");
         bincode::deserialize_from(&mut file).unwrap()
     }
 
