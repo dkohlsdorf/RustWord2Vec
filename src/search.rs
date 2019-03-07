@@ -49,12 +49,9 @@ impl Search {
     pub fn search(&self, token: &String, k: usize) -> Vec<SearchResult> {
         let mut pq = BinaryHeap::new();
         let token = self.dict.words2id[token];
-        println!("{}", token);
         let query = self.embeddings.at(token);
-        println!("{:?}", query);
         for i in 0..self.embeddings.rows() {
             let distance = euclidean(query, self.embeddings.at(i));
-            println!("{}", distance);
             pq.push(SearchResult {
                 result: self.dict.id2words[&i].clone(), 
                 distance: distance,
