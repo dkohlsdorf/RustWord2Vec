@@ -1,0 +1,12 @@
+[package]
+name = "wordvec"
+version = "0.1.0"
+authors = ["Daniel Kohlsdorf <daniel.kohlsdorf@xing.com>"]
+edition = "2018"
+
+[dependencies]
+config       = "0.9"
+rand         = "0.6.5"
+bincode      = "1.0"
+serde        = "*"
+serde_derive = "*"
