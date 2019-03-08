@@ -11,7 +11,7 @@ A rust implementation of continuous bag of words.
 
 Run the program specifying the input file, the output embedding file and the output dictionary file.
 
-````
+```
 >> cargo run learn data/quora/quora_processed.txt data/quora/quora_dict.bin data/quora/quora_embedding.bin
 
     Finished dev [unoptimized + debuginfo] target(s) in 0.16s
