@@ -12,7 +12,7 @@ A rust implementation of continuous bag of words.
 Run the program specifying the input file, the output embedding file and the output dictionary file.
 
 ````
-$ cargo run learn data/quora/quora_processed.txt data/quora/quora_dict.bin data/quora/quora_embedding.bin
+>> cargo run learn data/quora/quora_processed.txt data/quora/quora_dict.bin data/quora/quora_embedding.bin
 
     Finished dev [unoptimized + debuginfo] target(s) in 0.16s
      Running `target/debug/wordvec learn data/quora/quora_processed.txt data/quora/quora_dict.bin data/quora/quora_embedding.bin`
@@ -44,7 +44,7 @@ The program will write binary files. All the parameters for continuous bag of wo
 You can then search the closest words to another word. Some responses are in the SearchResults.md
 
 ```
-nb-dkohlsdorf:wordvec daniel.kohlsdorf$ cargo run search data/quora/quora_embedding.bin data/quora/quora_dict.bin munich 15
+>> cargo run search data/quora/quora_embedding.bin data/quora/quora_dict.bin munich 15
     Finished dev [unoptimized + debuginfo] target(s) in 0.14s
      Running `target/debug/wordvec search data/quora/quora_embedding.bin data/quora/quora_dict.bin munich 15`
 
