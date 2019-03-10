@@ -23,11 +23,13 @@ impl Ord for SearchResult {
 impl PartialOrd for SearchResult {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         if other.distance < self.distance {
-            return Some(Ordering::Less);
+            Some(Ordering::Less)
         } else if other.distance > self.distance {
-            return Some(Ordering::Greater);
+            Some(Ordering::Greater)
         }
-        None
+        else {
+            None
+        }
     }
 }
 
@@ -40,13 +42,13 @@ impl Search {
 
     pub fn new(embed_file: String, dict_file: String) -> Search {
         println!("\tloading embedding");
-        let embedding = ParameterStore::load(embed_file);
+        let embeddings = ParameterStore::load(embed_file);
         println!("\tloading dict");
         let dict = Dictionary::load(dict_file);
-        Search {dict : dict, embeddings: embedding}
+        Search { dict, embeddings }
     }
 
-    pub fn search(&self, token: &String, k: usize) -> Vec<SearchResult> {
+    pub fn search(&self, token: &str, k: usize) -> Vec<SearchResult> {
         let mut pq = BinaryHeap::new();
         let token = self.dict.words2id[token];
         let query = self.embeddings.at(token);
@@ -54,14 +56,10 @@ impl Search {
             let distance = euclidean(query, self.embeddings.at(i));
             pq.push(SearchResult {
                 result: self.dict.id2words[&i].clone(), 
-                distance: distance,
+                distance,
             });
         }
-        let mut result = Vec::new();
-        for _i in 0..k {
-            result.push(pq.pop().unwrap());
-        }
-        result
-    }
 
+        pq.into_iter().take(k).collect()
+    }
 }

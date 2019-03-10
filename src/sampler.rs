@@ -10,27 +10,32 @@ impl Sampler {
 
     pub fn new(counts: Vec<f64>) -> Sampler {
         let mut max = 0.0;
-        for i in 0 .. counts.len() {
-            if counts[i] > max {
-                max = counts[i];
+        for c in &counts {
+            if *c > max {
+                max = *c;
             }
         }
-        Sampler {counts: counts, max: max} 
+
+        Sampler { counts, max } 
     }
 
     pub fn unigram(words: Vec<usize>, rows: usize) -> Sampler {
-        let mut counts = vec![0.0; rows];
+        let mut counts = vec![0_f64; rows];
         for word in words.iter() {
             counts[*word] += 1.0;                                             
         }
-        for i in 0 .. rows {
-            counts[i] = f64::powf(counts[i], 0.75);
+
+        for c in &mut counts {
+            *c = (*c).powf(0.75);
         }
-        let mut so_far = 0.0;        
-        for i in 0 .. rows {
-            so_far += counts[i];
-            counts[i] = so_far;
+
+        let mut so_far = 0.0;
+
+        for c in &mut counts {
+            so_far += *c;
+            *c = so_far;
         }
+
         Sampler::new(counts)
     }
 
