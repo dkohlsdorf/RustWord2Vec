@@ -21,10 +21,10 @@ fn header() {
     println!("  Usage: ./embedder CMD INPUT DICT [OUTPUT] [SEARCHTERM] [k]");
     println!("      CMD:        search | learn");
     println!("      INPUT:      one line per document with space separated words. ");
-    println!("      OUTPUT:     a binary file starting with the vector dimension follwed by the flattened word vectors. One per hash value.");
+    println!("      OUTPUT:     a binary file starting with the vector dimension followed by the flattened word vectors. One per hash value.");
     println!("      SEARCHTERM: searching a word");
     println!("      k:          number of results");
-    println!("      DICT:       binar file for dictionary");
+    println!("      DICT:       binary file for dictionary");
     println!("by: Daniel Kohlsdorf");
     println!("mailto: dkohlsdorf@gmail.com");
 }

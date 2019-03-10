@@ -5,6 +5,7 @@ extern crate serde;
 
 use std::fs::File;
 use rand::Rng;
+use std::path::Path;
 
 #[derive(Serialize, Deserialize)]
 pub struct ParameterStore {
@@ -28,12 +29,12 @@ impl ParameterStore {
         ParameterStore { cols, weights: vec![0.0; rows * cols] }
     }
 
-    pub fn load(filename: String) -> ParameterStore {
+    pub fn load<P : AsRef<Path>>(filename: P) -> ParameterStore {
         let mut file = File::open(filename).unwrap();
         bincode::deserialize_from(&mut file).unwrap()
     }
 
-    pub fn write(&self, filename: String) {
+    pub fn write<P : AsRef<Path>>(&self, filename: P) {
         let mut fp = File::create(filename).unwrap();
         bincode::serialize_into(&mut fp, self).unwrap();
     }

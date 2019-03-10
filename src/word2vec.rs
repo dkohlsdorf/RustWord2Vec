@@ -1,3 +1,5 @@
+use std::path::Path;
+
 use crate::cbow::*;
 use crate::sampler::*;
 use crate::params::*;
@@ -24,10 +26,10 @@ impl<'a> Word2Vec<'a> {
         }
     }
 
-    pub fn optimize(&mut self, filename: String, win: usize, n_samples: usize, r: LearningRate, epochs: usize) {
-        let mut adjusted_rate = r;
+    pub fn optimize<P : AsRef<Path>>(&mut self, filename: P, win: usize, n_samples: usize, r: LearningRate, epochs: usize) {
+        let mut adjusted_rate = r.clone();
         for epoch in 0 .. epochs {
-            let stream = DocumentStream::new(filename.clone(), self.dict);
+            let stream = DocumentStream::new(&filename, self.dict);
             let mut total_error = 0.0;
             let mut n_windows = 0;
             for document in stream {
@@ -42,7 +44,7 @@ impl<'a> Word2Vec<'a> {
                     }       
                 }
             }
-            adjusted_rate = adjusted_rate.update();
+            adjusted_rate.update();
         }
     }
 

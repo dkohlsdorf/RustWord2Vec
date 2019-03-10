@@ -16,7 +16,7 @@ impl Eq for SearchResult {}
 
 impl Ord for SearchResult {
     fn cmp(&self, other: &SearchResult) -> Ordering {
-        self.partial_cmp(other).unwrap()
+        self.partial_cmp(other).unwrap_or_else(|| Ordering::Equal)
     }
 }
 

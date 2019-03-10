@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
+use std::path::Path;
 
 extern crate bincode;
 extern crate rand;
@@ -41,12 +42,12 @@ impl Dictionary {
         dict
     }
 
-    pub fn load(filename: String) -> Dictionary {
+    pub fn load<P : AsRef<Path>>(filename: P) -> Dictionary {
         let mut file = File::open(filename).unwrap();
         bincode::deserialize_from(&mut file).expect(&"Could not write binary params file".to_string())
     }
 
-    pub fn write(&self, filename: String) {
+    pub fn write<P : AsRef<Path>>(&self, filename: P) {
         let mut fp = File::create(filename).unwrap();
         bincode::serialize_into(&fp, self).unwrap();
         fp.flush().unwrap();
