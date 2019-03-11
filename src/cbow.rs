@@ -26,11 +26,11 @@ impl CBOW {
         result
     }    
 
-    fn gradient(&self, label: usize, h: &Vec<f64>, truth: f64, rate: f64) -> (f64, f64) {        
+    fn gradient(&self, label: usize, h: &[f64], truth: f64, rate: f64) -> (f64, f64) {
         let w = self.predict.at(label);
         let a = sigmoid(dot(&h, &w));
         let d = (truth - a) * rate;
-        let e = -f64::ln(if truth == 1.0 {a} else {1.0 - a});    
+        let e = -f64::ln(if (truth - 1f64).abs() < std::f64::EPSILON {a} else {1f64 - a});
         (d, e)
     } 
 
@@ -56,9 +56,9 @@ impl CBOW {
             }
             self.predict.update(token, &gradient_neg_predict);
         }
-        let ids = self.ids(window);
-        for i in 0 .. ids.len() {
-            self.embed.update(ids[i], &gradient_embed);
+
+        for i in self.ids(window).iter() {
+            self.embed.update(*i, &gradient_embed);
         }
         error
     }

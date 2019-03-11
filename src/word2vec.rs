@@ -1,3 +1,5 @@
+use std::path::Path;
+
 use crate::cbow::*;
 use crate::sampler::*;
 use crate::params::*;
@@ -19,34 +21,30 @@ impl<'a> Word2Vec<'a> {
                 embed:   ParameterStore::seeded(n_rows, n_hidden),
                 predict: ParameterStore::zeros(n_rows, n_hidden)
             },
-            unigrams: unigrams,
-            dict: dict
+            unigrams,
+            dict
         }
     }
 
-    pub fn optimize(&mut self, filename: String, win: usize, n_samples: usize, r: LearningRate, epochs: usize) {
-        let mut adjusted_rate = r;
+    pub fn optimize<P : AsRef<Path>>(&mut self, filename: P, win: usize, n_samples: usize, r: LearningRate, epochs: usize) {
+        let mut adjusted_rate = r.clone();
         for epoch in 0 .. epochs {
-            let stream = DocumentStream::new(filename.clone(), self.dict);
+            let stream = DocumentStream::new(&filename, self.dict);
             let mut total_error = 0.0;
             let mut n_windows = 0;
             for document in stream {
                 for win_idx in 0 .. document.words.len() { 
-                    let window = document.window(win_idx, win);
-                    match window {
-                        Some(window) => {
-                            total_error += self.model.negative_sampeling(&window, adjusted_rate.rate, n_samples, &self.unigrams); 
-                            n_windows   += 1;
-                            if n_windows % 10000 == 0 {
-                                println!("\t- EPOCH: {} ERROR: {} RATE: {} WINDOWS: {}", epoch, total_error, adjusted_rate.rate, n_windows);
-                                total_error = 0.0;
-                            }
-                        },
-                        None => ()
+                    if let Some(window) = document.window(win_idx, win) {
+                        total_error += self.model.negative_sampeling(&window, adjusted_rate.rate, n_samples, &self.unigrams); 
+                        n_windows   += 1;
+                        if n_windows % 10000 == 0 {
+                            println!("\t- EPOCH: {} ERROR: {} RATE: {} WINDOWS: {}", epoch, total_error, adjusted_rate.rate, n_windows);
+                            total_error = 0.0;
+                        }
                     }       
                 }
             }
-            adjusted_rate = adjusted_rate.update();
+            adjusted_rate.update();
         }
     }
 
