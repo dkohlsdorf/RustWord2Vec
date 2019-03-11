@@ -60,6 +60,10 @@ impl Search {
             });
         }
 
-        pq.into_iter().take(k).collect()
+        let mut result = Vec::new();
+        for _i in 0..k {
+            result.push(pq.pop().unwrap());
+        }
+        result
     }
 }

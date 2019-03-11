@@ -56,5 +56,4 @@ impl Sampler {
         let uniform = rng.gen_range(0.0, self.max);
         self.bisect(uniform, 0, n)        
     }
-    
 }
