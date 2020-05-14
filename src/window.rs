@@ -1,5 +1,6 @@
 
 pub struct Window<'a> {
+    pub ids:         &'a [usize],
     pub words:       &'a [usize], 
     pub predict_pos: usize
 }

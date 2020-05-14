@@ -16,7 +16,10 @@ impl CBOW {
             if i != win.predict_pos {
                 ids.push(win.words[i])
             }
-        }        
+        }
+        for id in win.ids.iter() {
+            ids.push(*id)
+        }
         ids
     }
 
