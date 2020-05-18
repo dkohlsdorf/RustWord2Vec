@@ -36,10 +36,10 @@ impl<'a> DocumentStream<'a> {
 
     fn doc(line: String, dict: &Dictionary) -> Document {        
         let components: Vec<&str> = line.trim().split_terminator(',').collect();
-        let tokens: Vec<&str> = components[0].trim().split_terminator(' ').collect();
-        let ids: Vec<&str> = components[1].trim().split_terminator(' ').collect();
+        let tokens: Vec<&str> = components[1].trim().split_terminator(' ').collect();
+        let ids: Vec<&str> = components[0].trim().split_terminator(' ').collect();
         let mut words: Vec<String> = Vec::new();
-        let mut id_tokens: Vec<String> = Vec::new();
+        let mut id_tokens: Vec<String> = Vec::new();        
         for token in tokens {            
             words.push(String::from(token));
         }

@@ -37,7 +37,7 @@ impl<'a> Word2Vec<'a> {
                     if let Some(window) = document.window(win_idx, win) {
                         total_error += self.model.negative_sampeling(&window, adjusted_rate.rate, n_samples, &self.unigrams); 
                         n_windows   += 1;
-                        if n_windows % 100 == 0 {
+                        if n_windows % 10000 == 0 {
                             println!("\t- EPOCH: {} ERROR: {} RATE: {} WINDOWS: {}", epoch, total_error, adjusted_rate.rate, n_windows);
                             total_error = 0.0;
                         }

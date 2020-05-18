@@ -27,8 +27,8 @@ impl Dictionary {
         while let Ok(n) = reader.read_line(&mut line) {
             if n < 1 { break; }
             let components: Vec<&str> = line.trim().split_terminator(',').collect();
-            let tokens: Vec<&str> = components[0].trim().split_terminator(' ').collect();
-            let ids: Vec<&str> = components[1].trim().split_terminator(' ').collect();
+            let tokens: Vec<&str> = components[1].trim().split_terminator(' ').collect();
+            let ids: Vec<&str> = components[0].trim().split_terminator(' ').collect();
             for token in tokens.iter().chain(ids.iter()) {
                 if !dict.words2id.contains_key(&token.to_string()) {
                     dict.words2id.insert(token.to_string(), current_id);
