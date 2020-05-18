@@ -1,4 +1,4 @@
-dim        = 100
+dim        = 32
 win        = 5
 n_samples  = 8
 epochs     = 150
