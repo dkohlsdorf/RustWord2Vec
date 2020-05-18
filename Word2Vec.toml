@@ -1,7 +1,7 @@
 dim        = 100
 win        = 5
 n_samples  = 8
-epochs     = 5
+epochs     = 150
 start_rate = 0.025
 min_rate   = 0.0001
 step_rate  = 0.002

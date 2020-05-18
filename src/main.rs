@@ -14,6 +14,7 @@ pub mod search;
 pub mod window;
 pub mod word2vec;
 
+use crate::dictionary::Dictionary;
 use std::collections::HashMap;
 
 fn header() {
@@ -83,6 +84,11 @@ fn main() {
             word2vec.model.embed.write(output.clone());
             println!("Writing dictionary");
             dict.write(dictname.clone());
+        } else if cmd.eq("tokens") {
+            let dict = Dictionary::load(dictname);
+            for key in dict.words2id.keys() {
+                println!("{}", key);
+            }            
         } else {
             let token = &args[4];
             let k     = args[5].parse::<usize>().unwrap();
